@@ -4,6 +4,7 @@ import Logo from './logo.svg';
 import { Task } from './interfaces/Task';
 import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
+
 interface Props {
   title: string
 }
@@ -25,8 +26,22 @@ export function App({ title }: Props) {
     setTasks(tasks.filter(task => {
       return id!==task.id
     }));
-     
-}
+  
+  }
+  const completedTask = (id: number) => {
+      const taskEdit = tasks.filter(task=>task.id===id);
+      taskEdit[0].completed=true;
+      const tasksList = tasks.filter(task=>task.id!==id);
+      setTasks([...tasksList, ...taskEdit]);
+  }
+
+  const cancelCompletedTask = (id: number) => {
+    const taskEdit = tasks.filter(task=>task.id===id);
+    taskEdit[0].completed=false;
+    const tasksList = tasks.filter(task=>task.id!==id);
+    setTasks([...taskEdit, ...tasksList]);
+
+  }
 
   return (
 
@@ -48,7 +63,8 @@ export function App({ title }: Props) {
           </div>
           <div className="col-md-8">
             <div className="row">
-              <TaskList deleteTask={deleteTask} tasks={tasks} />
+
+              <TaskList cancelCompletedTask={cancelCompletedTask} editTask={completedTask} deleteTask={deleteTask} tasks={tasks} />
 
             </div>
           </div>
