@@ -4,10 +4,10 @@ interface Props {
     task: Task,
     deleteTask: (id: number)=>void
     editTask: (id: number)=>void
-    cancelCompletedTask: (id: number)=>void
+    
 }
 
-export default ({editTask, task, deleteTask, cancelCompletedTask}: Props)=> {
+export default ({editTask, task, deleteTask}: Props)=> {
     return (
         <div className="card card-body bg-secondary rounded-0 text-dark">
             <h3>{task.title}</h3>
@@ -22,7 +22,7 @@ export default ({editTask, task, deleteTask, cancelCompletedTask}: Props)=> {
                 <FcApproval/>
             </button>
             :
-            <button className="btn btn-warning" onClick={()=>cancelCompletedTask(task.id)}>
+            <button className="btn btn-warning" onClick={()=>editTask(task.id)}>
                 Cancel
                 <FcCancel/>
             </button>

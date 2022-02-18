@@ -29,19 +29,16 @@ export function App({ title }: Props) {
   
   }
   const completedTask = (id: number) => {
-      const taskEdit = tasks.filter(task=>task.id===id);
-      taskEdit[0].completed=true;
-      const tasksList = tasks.filter(task=>task.id!==id);
-      setTasks([...tasksList, ...taskEdit]);
+      let newTasks: Task[]= [...tasks];
+      tasks.forEach((task,index)=>{
+        if (task.id === id) newTasks[index].completed = !task.completed;
+      });
+      setTasks([...newTasks]);
   }
 
-  const cancelCompletedTask = (id: number) => {
-    const taskEdit = tasks.filter(task=>task.id===id);
-    taskEdit[0].completed=false;
-    const tasksList = tasks.filter(task=>task.id!==id);
-    setTasks([...taskEdit, ...tasksList]);
 
-  }
+
+  
 
   return (
 
@@ -64,7 +61,7 @@ export function App({ title }: Props) {
           <div className="col-md-8">
             <div className="row">
 
-              <TaskList cancelCompletedTask={cancelCompletedTask} editTask={completedTask} deleteTask={deleteTask} tasks={tasks} />
+              <TaskList editTask={completedTask} deleteTask={deleteTask} tasks={tasks} />
 
             </div>
           </div>
